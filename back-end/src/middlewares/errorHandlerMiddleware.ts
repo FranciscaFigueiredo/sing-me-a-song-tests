@@ -1,21 +1,23 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 import {
-  AppError,
-  errorTypeToStatusCode,
-  isAppError,
-} from "../utils/errorUtils.js";
+    AppError,
+    errorTypeToStatusCode,
+    isAppError,
+} from '../utils/errorUtils';
 
 export function errorHandlerMiddleware(
-  err: Error | AppError,
-  req: Request,
-  res: Response,
-  next: NextFunction
+    err: Error | AppError,
+    req: Request,
+    res: Response,
+    next: NextFunction,
 ) {
-  console.log(err);
+    // eslint-disable-next-line no-console
+    console.log(err);
 
-  if (isAppError(err)) {
-    return res.status(errorTypeToStatusCode(err.type)).send(err.message);
-  }
+    if (isAppError(err)) {
+        return res.status(errorTypeToStatusCode(err.type)).send(err.message);
+    }
 
-  return res.sendStatus(500);
+    res.sendStatus(500);
+    return next();
 }
