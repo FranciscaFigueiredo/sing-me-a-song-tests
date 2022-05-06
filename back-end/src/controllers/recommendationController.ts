@@ -7,6 +7,8 @@ async function insert(req: Request, res: Response): Promise<Response> {
     const validation = recommendationSchema.validate(req.body);
 
     if (validation.error) {
+        console.log(validation.error.message);
+
         throw wrongSchemaError();
     }
 
