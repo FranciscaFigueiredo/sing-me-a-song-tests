@@ -1,16 +1,16 @@
-import { Prisma, PrismaPromise, Recommendation } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { prisma } from '../database';
 import { CreateRecommendationData } from '../services/recommendationsService';
 
-async function create(createRecommendationData: CreateRecommendationData): Promise<void> {
+async function create(createRecommendationData: CreateRecommendationData) {
     await prisma.recommendation.create({
         data: createRecommendationData,
     });
 }
 
 interface FindAllWhere {
-    score: number;
-    scoreFilter: 'lte' | 'gt';
+  score: number;
+  scoreFilter: 'lte' | 'gt';
 }
 
 function getFindAllFilter(
@@ -25,30 +25,37 @@ function getFindAllFilter(
     };
 }
 
-function findAll(findAllWhere?: FindAllWhere): PrismaPromise<Recommendation[]> {
+function findAll(findAllWhere?: FindAllWhere) {
     const filter = getFindAllFilter(findAllWhere);
 
     return prisma.recommendation.findMany({
         where: filter,
         orderBy: { id: 'desc' },
+        take: 10,
     });
 }
 
-function getAmountByScore(take: number): PrismaPromise<Recommendation[]> {
+function getAmountByScore(take: number) {
     return prisma.recommendation.findMany({
         orderBy: { score: 'desc' },
         take,
     });
 }
 
-function find(id: number): Prisma.Prisma__RecommendationClient<Recommendation> {
+function find(id: number) {
     return prisma.recommendation.findUnique({
         where: { id },
     });
 }
 
-async function updateScore(id: number, operation: 'increment' | 'decrement'): Promise<void> {
-    await prisma.recommendation.update({
+function findByName(name: string) {
+    return prisma.recommendation.findUnique({
+        where: { name },
+    });
+}
+
+async function updateScore(id: number, operation: 'increment' | 'decrement') {
+    return prisma.recommendation.update({
         where: { id },
         data: {
             score: { [operation]: 1 },
@@ -56,7 +63,7 @@ async function updateScore(id: number, operation: 'increment' | 'decrement'): Pr
     });
 }
 
-async function remove(id: number): Promise<void> {
+async function remove(id: number) {
     await prisma.recommendation.delete({
         where: { id },
     });
@@ -66,6 +73,7 @@ export const recommendationRepository = {
     create,
     findAll,
     find,
+    findByName,
     updateScore,
     getAmountByScore,
     remove,
