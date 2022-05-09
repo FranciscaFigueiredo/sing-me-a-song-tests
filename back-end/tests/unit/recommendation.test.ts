@@ -146,7 +146,7 @@ describe('TOP recommendation', () => {
         const result = async () => {
             await recommendationService.getRandom();
         };
-        console.log(result);
+        console.log({result});
 
         expect(result).rejects.toEqual({
             id: 1,
