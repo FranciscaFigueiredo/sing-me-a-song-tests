@@ -147,7 +147,7 @@ describe('TOP recommendation', () => {
             await recommendationService.getRandom();
         };
 
-        expect(await result()).toEqual({
+        expect(result).toEqual({
             id: 1,
             name: 'Chitãozinho E Xororó - Evidências',
             youtubeLink: 'https://www.youtube.com/watch?v=ePjtnSPFWK8&ab_channel=CHXVEVO',
