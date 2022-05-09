@@ -16,7 +16,6 @@ describe("POST recommendation", () => {
 	});
 });
 
-
 describe("POST vote", () => {
 	beforeEach(() => {
 		cy.createRecommendation();
@@ -36,6 +35,30 @@ describe("POST vote", () => {
 	it("must post downvote and succeed", () => {
 		cy.get('#GoArrowDown').click();
 		cy.contains(-1);
+
+		cy.end();
+	});
+});
+
+describe("TOP page", () => {
+	it("should go to top recommendations page when click", () => {
+		cy.visit('http://localhost:3000');
+
+		cy.get('#top').click();
+	
+		cy.url().should('eq', 'http://localhost:3000/top');
+
+		cy.end();
+	});
+});
+
+describe("RANDOM page", () => {
+	it("should go to top recommendations page when click", () => {
+		cy.visit('http://localhost:3000');
+
+		cy.get('#random').click();
+		
+		cy.url().should('eq', 'http://localhost:3000/random') 
 
 		cy.end();
 	});
