@@ -24,7 +24,7 @@
 
 ### - Clone repository
 ```
-  git clone https://github.com/FranciscaFigueiredo/API-Sing-me-a-Song.git
+  git clone https://github.com/FranciscaFigueiredo/sing-me-a-song-tests.git
 ```
 
 <br/>
