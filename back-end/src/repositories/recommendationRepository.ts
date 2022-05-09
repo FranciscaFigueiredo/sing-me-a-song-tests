@@ -3,9 +3,11 @@ import { prisma } from '../database';
 import { CreateRecommendationData } from '../services/recommendationsService';
 
 async function create(createRecommendationData: CreateRecommendationData) {
-    await prisma.recommendation.create({
+    const recommendation = await prisma.recommendation.create({
         data: createRecommendationData,
     });
+
+    return recommendation;
 }
 
 interface FindAllWhere {

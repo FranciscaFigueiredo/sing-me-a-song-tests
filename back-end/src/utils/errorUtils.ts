@@ -4,11 +4,11 @@ export interface AppError {
     message: string;
 }
 
-export function isAppError(error: object): error is AppError {
+function isAppError(error: object): error is AppError {
     return (error as AppError).type !== undefined;
 }
 
-export function errorTypeToStatusCode(type: AppErrorTypes): 400 | 401 | 404 | 409 | 422 {
+function errorTypeToStatusCode(type: AppErrorTypes): 400 | 401 | 404 | 409 | 422 {
     if (type === 'conflict') return 409;
     if (type === 'not_found') return 404;
     if (type === 'unauthorized') return 401;
@@ -17,18 +17,27 @@ export function errorTypeToStatusCode(type: AppErrorTypes): 400 | 401 | 404 | 40
     return 400;
 }
 
-export function conflictError(message?: string): AppError {
+function conflictError(message?: string): AppError {
     return { type: 'conflict', message: message ?? '' };
 }
 
-export function notFoundError(message?: string): AppError {
+function notFoundError(message?: string): AppError {
     return { type: 'not_found', message: message ?? '' };
 }
 
-export function unauthorizedError(message?: string): AppError {
+function unauthorizedError(message?: string): AppError {
     return { type: 'unauthorized', message: message ?? '' };
 }
 
-export function wrongSchemaError(message?: string): AppError {
+function wrongSchemaError(message?: string): AppError {
     return { type: 'wrong_schema', message: message ?? '' };
+}
+
+export {
+    isAppError,
+    errorTypeToStatusCode,
+    conflictError,
+    notFoundError,
+    unauthorizedError,
+    wrongSchemaError,
 }
