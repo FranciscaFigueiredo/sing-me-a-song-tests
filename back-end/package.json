@@ -3,11 +3,14 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "start:dev": "NODE_ENV=dev npx nodemon src/server.ts",
-        "test-integration": "dotenv -e .env.test prisma db seed && NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest -i --watchAll",
+        "test": "dotenv -e .env.test prisma db seed && NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest -i",
+        "test-backend": "NODE_ENV=test dotenv -e .env.test prisma db seed && NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest -i --watchAll",
         "test-e2e": "NODE_ENV=test npx nodemon src/server.ts",
-        "migrate": "dotenv -e .env.test prisma migrate dev"
+        "migrate": "dotenv -e .env.test prisma migrate dev",
+        "coverage": "npm run test -- --coverage"
     },
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
@@ -17,6 +20,7 @@
     "license": "ISC",
     "devDependencies": {
         "@faker-js/faker": "^6.3.1",
+        "@jest/globals": "^28.1.0",
         "@types/cors": "^2.8.12",
         "@types/dotenv": "^8.2.0",
         "@types/express": "^4.17.13",
